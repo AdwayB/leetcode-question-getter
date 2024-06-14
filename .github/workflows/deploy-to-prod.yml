@@ -1,0 +1,24 @@
+name: Deploy To Render Prod
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Trigger Render Deploy
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          curl -X POST "https://api.render.com/v1/services/srv-cplpd9aj1k6c739odol0/deploys/dep-cplpd9ij1k6c739odoog/deploys" \
+          -H 'Authorization: Bearer $RENDER_API_KEY' \
+          -H 'Content-Type: application/json' \
+          -d '{"clearCache": false}'
