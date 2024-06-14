@@ -55,7 +55,8 @@ def fetch_questions():
                                                            hard_proportion,
                                                            topics)
 
-        return render_template('results.html', tables=filtered_data.to_html(classes='data'), json_file=json_file,
+        return render_template('results.html', tables=filtered_data.to_html(classes='data', escape=False),
+                               json_file=json_file,
                                excel_file=excel_file)
     except ValueError:
         flash("Please enter valid input values.")

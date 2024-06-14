@@ -125,7 +125,10 @@ def filter_data(num_questions, easy_proportion, medium_proportion, hard_proporti
 
     formatted_response = []
     for question in final_questions:
-        title = question["title"]
+        title_text, slug = question["title"],  question["titleSlug"]
+        url = f"https://leetcode.com/problems/{slug}/description"
+
+        title = f'<a target="_blank" href="{url}">{title_text}</a>'
         topic_names = ", ".join([topic["name"] for topic in question["topicTags"]])
         difficulty = question["difficulty"]
         acceptance_rate = round(float(question["acRate"]), 2)
