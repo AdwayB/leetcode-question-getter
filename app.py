@@ -74,7 +74,3 @@ def download_file(filetype):
         return send_file('lc-questions.xlsx', as_attachment=True)
     else:
         return "Invalid file type!", 400
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
