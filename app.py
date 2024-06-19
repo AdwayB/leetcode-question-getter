@@ -19,7 +19,7 @@ def is_valid_topics(topics):
     if not isinstance(topics, list):
         return False
     for topic in topics:
-        if not re.match("^[a-zA-Z ]*$", topic):
+        if not re.match("^[A-Z][a-zA-Z \-\(\)]*$", topic):
             return False
     return True
 
@@ -38,18 +38,20 @@ def fetch_questions():
         hard_proportion = int(request.form['hard_proportion'])
         topics = request.form.getlist('topics')
 
+        print(f"Topics Requested: {topics}")  # Debugging
+
         if not is_valid_percentage(easy_proportion) or not is_valid_percentage(
                 medium_proportion) or not is_valid_percentage(hard_proportion):
             flash("Each difficulty percentage must be between 0 and 100.")
-            return redirect(url_for('home'))
+            raise ValueError("Each difficulty percentage must be between 0 and 100.") 
 
         if easy_proportion + medium_proportion + hard_proportion != 100:
             flash("The sum of all difficulty percentages must be 100.")
-            return redirect(url_for('home'))
+            raise ValueError("The sum of all difficulty percentages must be 100.") 
 
         if not is_valid_topics(topics):
-            flash("Topics must only contain alphabets and commas.")
-            return redirect(url_for('home'))
+            flash("Topics must only contain alphabets, commas, spaces and parentheses.")
+            raise ValueError("Topics must only contain alphabets, commas, spaces and parentheses.") 
 
         filtered_data, json_file, excel_file = filter_data(num_questions, easy_proportion, medium_proportion,
                                                            hard_proportion,
@@ -58,8 +60,9 @@ def fetch_questions():
         return render_template('results.html', tables=filtered_data.to_html(classes='data', escape=False),
                                json_file=json_file,
                                excel_file=excel_file)
-    except ValueError:
+    except ValueError as e:
         flash("Please enter valid input values.")
+        print(f"Exception: {e}")
         return redirect(url_for('home'))
     except Exception as e:
         flash("An error occurred while fetching data.")

@@ -1,3 +1,6 @@
 .idea
 lc-questions.json
 *.xlsx
+**/*.cpython-311.pyc
+**/__pycache/**
+**/*.pyc
