@@ -13,6 +13,10 @@ def export_data(filtered_data):
     return json_output_file_name, excel_output_file_name
 
 
+def get_rand_int(max_skip, limit):
+    return random.randint(0, max_skip // limit) * limit
+
+
 all_topics = ["Array",
               "String",
               "Hash Table",
@@ -95,11 +99,19 @@ def filter_data(num_questions, easy_proportion, medium_proportion, hard_proporti
     num_medium = int(num_questions * medium_proportion // 100)
     num_hard = int(num_questions * hard_proportion // 100)
 
-    skip = 0
+    limit = 100
+    max_skip = 3189
+    previous_skips = set()
+
     while len(easy_questions) < num_easy or len(medium_questions) < num_medium or len(hard_questions) < num_hard:
-        data = fetch_data(100, skip)
+        skip = get_rand_int(max_skip, limit)
+
+        while skip in previous_skips:
+            skip = get_rand_int(max_skip, limit)
+
+        data = fetch_data(limit, skip)
+        previous_skips.add(skip)
         print(f"Fetched data for skip: {skip}")
-        skip += 100
         questions = data['data']['problemsetQuestionList']['questions']
 
         if topics:
