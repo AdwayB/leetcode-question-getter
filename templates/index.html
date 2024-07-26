@@ -1,201 +1,324 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../static/favicon.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../static/favicon.ico" />
     <title>Fetch LeetCode Questions</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
     <style>
-        .form-bg {
-            background-color: #373c3f55;
-        }
+      .form-bg {
+        background-color: #373c3f55;
+      }
 
-        .custom-select {
-            height: 15rem;
-        }
+      .custom-select {
+        height: 9rem;
+      }
 
-        .custom-option {
-            padding: 5px;
-            border-radius: 0.5rem;
-            margin: 0.5rem 0;
-        }
+      .custom-option {
+        padding: 5px;
+        border-radius: 0.5rem;
+        margin: 0.5rem 0;
+      }
 
-        option:checked {
-            background: dodgerblue;
-        }
+      option:checked {
+        background: dodgerblue;
+      }
 
-        input::placeholder {
-            color: #ffffffaa !important;
-        }
+      input::placeholder {
+        color: #ffffffaa !important;
+      }
 
-        input[type="text"] {
-            padding-inline: 45px;
-        }
+      input[type="text"] {
+        padding-inline: 45px;
+      }
 
-        #selectedValue{
-            max-height: 10rem;
-        }
+      #selectedValue {
+        max-height: 5rem;
+      }
 
-        ::-webkit-scrollbar {
-            width: 0.313rem;
-            height: 0.313rem;
-        }
+      ::-webkit-scrollbar {
+        width: 0.313rem;
+        height: 0.313rem;
+      }
 
-        ::-webkit-scrollbar-thumb {
-            background-color: #777;
-            border-radius: 2rem;
-        }
+      ::-webkit-scrollbar-thumb {
+        background-color: #777;
+        border-radius: 2rem;
+      }
 
-        ::-webkit-scrollbar-track {
-            border-radius: 2rem;
-            background-color: transparent;
-        }
+      ::-webkit-scrollbar-track {
+        border-radius: 2rem;
+        background-color: transparent;
+      }
     </style>
-</head>
-<body class="vw-100 vh-100 bg-dark d-flex align-items-center justify-content-center">
-<div class="form-bg container rounded-5 p-5 w-50 bg-opacity-50">
-    <h1 class="text-center mb-4 text-light">Fetch LeetCode Questions</h1>
-    <form id="fetch-form" action="/fetch" method="post" class="p-4 rounded text-white">
+  </head>
+  <body
+    class="vw-100 vh-100 bg-dark d-flex align-items-center justify-content-center"
+  >
+    <div class="form-bg container rounded-5 p-3 w-50 bg-opacity-50">
+      <h1 class="text-center text-light">Fetch LeetCode Questions</h1>
+      <form
+        id="fetch-form"
+        action="/fetch"
+        method="post"
+        class="p-4 rounded text-white"
+      >
         <div class="mb-4">
-            <label class="form-label fw-bolder mb-2" for="num_questions">
-                Number of Questions
-            </label>
-            <input class="text-white form-control bg-transparent" id="num_questions" name="num_questions" type="number"
-                   placeholder="Enter number of questions" required>
+          <label class="form-label fw-bolder mb-2" for="num_questions">
+            Number of Questions
+          </label>
+          <input
+            class="text-white form-control bg-transparent"
+            id="num_questions"
+            name="num_questions"
+            type="number"
+            placeholder="Enter number of questions"
+            required
+          />
         </div>
         <div class="mb-4">
-            <label class="form-label fw-bolder mb-2" for="easy_proportion">
-                Percentage of Easy Questions
-            </label>
-            <input class="text-white form-control bg-transparent placeholder::text-white-50" id="easy_proportion"
-                   name="easy_proportion" type="number" placeholder="Enter percentage" required>
+          <label class="form-label fw-bolder mb-2" for="easy_proportion">
+            Percentage of Easy Questions
+          </label>
+          <input
+            class="text-white form-control bg-transparent placeholder::text-white-50"
+            id="easy_proportion"
+            name="easy_proportion"
+            type="number"
+            placeholder="Enter percentage"
+            required
+          />
         </div>
         <div class="mb-4">
-            <label class="form-label fw-bolder mb-2" for="medium_proportion">
-                Percentage of Medium Questions
-            </label>
-            <input class="text-white form-control bg-transparent" id="medium_proportion" name="medium_proportion"
-                   type="number"
-                   placeholder="Enter percentage" required>
+          <label class="form-label fw-bolder mb-2" for="medium_proportion">
+            Percentage of Medium Questions
+          </label>
+          <input
+            class="text-white form-control bg-transparent"
+            id="medium_proportion"
+            name="medium_proportion"
+            type="number"
+            placeholder="Enter percentage"
+            required
+          />
         </div>
         <div class="mb-4">
-            <label class="form-label fw-bolder mb-2" for="hard_proportion">
-                Percentage of Hard Questions
-            </label>
-            <input class="text-white form-control bg-transparent" id="hard_proportion" name="hard_proportion"
-                   type="number"
-                   placeholder="Enter percentage" required>
+          <label class="form-label fw-bolder mb-2" for="hard_proportion">
+            Percentage of Hard Questions
+          </label>
+          <input
+            class="text-white form-control bg-transparent"
+            id="hard_proportion"
+            name="hard_proportion"
+            type="number"
+            placeholder="Enter percentage"
+            required
+          />
         </div>
         <div class="mb-lg-5">
-            <label class="form-label fw-bolder mb-2" for="topics">
-                Topics
-            </label>
-            <select class="form-control custom-select mb-4 form-select bg-transparent text-white" id="topics"
-                    name="topics" multiple
-                    onchange="handleSelectChange()">
-            </select>
-            <button type="button" class="btn btn-primary me-2" onclick="selectAllOptions()">Select All</button>
-            <button type="button" class="btn btn-secondary" onclick="clearAllOptions()">Clear All</button>
-            <div class="mt-3 d-flex flex-row align-items-center justify-content-start">
-                <div class="mt-3">Selected Values:&nbsp;</div>
-                <div id="selectedValue" class="mt-3 ms-3 d-flex w-75 overflow-x-auto text-wrap fw-semibold"></div>
-            </div>
+          <label class="form-label fw-bolder mb-2" for="topics"> Topics </label>
+          <select
+            class="form-control custom-select mb-4 form-select bg-transparent text-white"
+            id="topics"
+            name="topics"
+            multiple
+            onchange="handleSelectChange()"
+          ></select>
+          <button
+            type="button"
+            class="btn btn-primary me-2"
+            onclick="selectAllOptions()"
+          >
+            Select All
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="clearAllOptions()"
+          >
+            Clear All
+          </button>
+          <div
+            class="mt-3 d-flex flex-row align-items-center justify-content-start"
+          >
+            <div class="mt-3">Selected Values:&nbsp;</div>
+            <div
+              id="selectedValue"
+              class="mt-3 ms-3 d-flex w-75 overflow-x-auto text-wrap fw-semibold"
+            ></div>
+          </div>
         </div>
         <div class="w-100 d-flex justify-content-center">
-            <button class="btn btn-primary" type="submit">
-                Fetch Questions
-            </button>
+          <button class="btn btn-primary" type="submit">Fetch Questions</button>
         </div>
-    </form>
-    <div id="error-message-1" class="text-danger"></div>
-    <div id="error-message-2" class="text-danger"></div>
-    <div id="error-message-3" class="text-danger"></div>
-</div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-<script>
-    const options = [
-        "Array", "String", "Hash Table", "Dynamic Programming", "Math", "Sorting", "Greedy", "Depth-First Search",
-        "Database", "Binary Search", "Tree", "Breadth-First Search", "Matrix", "Bit Manipulation", "Two Pointers",
-        "Binary Tree", "Heap (Priority Queue)", "Prefix Sum", "Stack", "Simulation", "Graph", "Counting", "Design",
-        "Sliding Window", "Backtracking", "Enumeration", "Union Find", "Linked List", "Ordered Set", "Monotonic Stack",
-        "Number Theory", "Trie", "Divide and Conquer", "Bitmask", "Recursion", "Segment Tree", "Queue",
-        "Binary Search Tree", "Memoization", "Geometry", "Binary Indexed Tree", "Hash Function", "Combinatorics",
-        "Topological Sort", "String Matching", "Shortest Path", "Rolling Hash", "Game Theory", "Interactive",
-        "Data Stream", "Brainteaser", "Monotonic Queue", "Randomized", "Merge Sort", "Iterator", "Concurrency",
-        "Doubly-Linked List", "Probability and Statistics", "Quickselect", "Bucket Sort", "Suffix Array",
-        "Minimum Spanning Tree", "Counting Sort", "Shell", "Line Sweep", "Reservoir Sampling",
-        "Strongly Connected Component", "Eulerian Circuit", "Radix Sort", "Rejection Sampling",
-        "Biconnected Component"
-    ];
+      </form>
+      <div id="error-message-1" class="text-danger"></div>
+      <div id="error-message-2" class="text-danger"></div>
+      <div id="error-message-3" class="text-danger"></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const options = [
+        "Array",
+        "String",
+        "Hash Table",
+        "Dynamic Programming",
+        "Math",
+        "Sorting",
+        "Greedy",
+        "Depth-First Search",
+        "Database",
+        "Binary Search",
+        "Tree",
+        "Breadth-First Search",
+        "Matrix",
+        "Bit Manipulation",
+        "Two Pointers",
+        "Binary Tree",
+        "Heap (Priority Queue)",
+        "Prefix Sum",
+        "Stack",
+        "Simulation",
+        "Graph",
+        "Counting",
+        "Design",
+        "Sliding Window",
+        "Backtracking",
+        "Enumeration",
+        "Union Find",
+        "Linked List",
+        "Ordered Set",
+        "Monotonic Stack",
+        "Number Theory",
+        "Trie",
+        "Divide and Conquer",
+        "Bitmask",
+        "Recursion",
+        "Segment Tree",
+        "Queue",
+        "Binary Search Tree",
+        "Memoization",
+        "Geometry",
+        "Binary Indexed Tree",
+        "Hash Function",
+        "Combinatorics",
+        "Topological Sort",
+        "String Matching",
+        "Shortest Path",
+        "Rolling Hash",
+        "Game Theory",
+        "Interactive",
+        "Data Stream",
+        "Brainteaser",
+        "Monotonic Queue",
+        "Randomized",
+        "Merge Sort",
+        "Iterator",
+        "Concurrency",
+        "Doubly-Linked List",
+        "Probability and Statistics",
+        "Quickselect",
+        "Bucket Sort",
+        "Suffix Array",
+        "Minimum Spanning Tree",
+        "Counting Sort",
+        "Shell",
+        "Line Sweep",
+        "Reservoir Sampling",
+        "Strongly Connected Component",
+        "Eulerian Circuit",
+        "Radix Sort",
+        "Rejection Sampling",
+        "Biconnected Component",
+      ];
 
-    const selectElement = document.getElementById('topics');
+      const selectElement = document.getElementById("topics");
 
-    options.forEach(option => {
-        const opt = document.createElement('option');
+      options.forEach((option) => {
+        const opt = document.createElement("option");
         opt.value = option;
         opt.textContent = option;
-        opt.className = "custom-option"
+        opt.className = "custom-option";
         selectElement.appendChild(opt);
-    });
+      });
 
-    handleSelectChange = () => {
-        const selectedValues = Array.from(selectElement.selectedOptions).map(option => option.value);
-        document.getElementById('selectedValue').innerText = `${selectedValues.join(', ')}`;
-    }
+      handleSelectChange = () => {
+        const selectedValues = Array.from(selectElement.selectedOptions).map(
+          (option) => option.value
+        );
+        document.getElementById(
+          "selectedValue"
+        ).innerText = `${selectedValues.join(", ")}`;
+      };
 
-    selectAllOptions = () => {
+      selectAllOptions = () => {
         for (let i = 0; i < selectElement.options.length; i++) {
-            selectElement.options[i].selected = true;
+          selectElement.options[i].selected = true;
         }
         handleSelectChange();
-    }
+      };
 
-    clearAllOptions = () => {
+      clearAllOptions = () => {
         for (let i = 0; i < selectElement.options.length; i++) {
-            selectElement.options[i].selected = false;
+          selectElement.options[i].selected = false;
         }
         handleSelectChange();
-    }
+      };
 
-    document.getElementById('fetch-form').onsubmit = (e) => {
-        const numQuestions = document.getElementById('num_questions').value;
-        const percEasy = document.getElementById('easy_proportion').value;
-        const percMedium = document.getElementById('medium_proportion').value;
-        const percHard = document.getElementById('hard_proportion').value;
+      document.getElementById("fetch-form").onsubmit = (e) => {
+        const numQuestions = document.getElementById("num_questions").value;
+        const percEasy = document.getElementById("easy_proportion").value;
+        const percMedium = document.getElementById("medium_proportion").value;
+        const percHard = document.getElementById("hard_proportion").value;
 
-        const totalPerc = parseInt(percEasy) + parseInt(percMedium) + parseInt(percHard);
+        const totalPerc =
+          parseInt(percEasy) + parseInt(percMedium) + parseInt(percHard);
 
         if (numQuestions > 3189) {
-            e.preventDefault();
-            document.getElementById('error-message-1').innerText = 'There are only 3183 questions available.';
-            return false;
+          e.preventDefault();
+          document.getElementById("error-message-1").innerText =
+            "There are only 3183 questions available.";
+          return false;
         }
 
-        if (parseInt(percEasy) < 0 || parseInt(percEasy) > 100 ||
-            parseInt(percMedium) < 0 || parseInt(percMedium) > 100 ||
-            parseInt(percHard) < 0 || parseInt(percHard) > 100) {
-            e.preventDefault();
-            document.getElementById('error-message-2').innerText = 'Each difficulty percentage must be between 0 and 100.';
-            return false;
+        if (
+          parseInt(percEasy) < 0 ||
+          parseInt(percEasy) > 100 ||
+          parseInt(percMedium) < 0 ||
+          parseInt(percMedium) > 100 ||
+          parseInt(percHard) < 0 ||
+          parseInt(percHard) > 100
+        ) {
+          e.preventDefault();
+          document.getElementById("error-message-2").innerText =
+            "Each difficulty percentage must be between 0 and 100.";
+          return false;
         }
 
         if (totalPerc !== 100) {
-            e.preventDefault();
-            document.getElementById('error-message-3').innerText = 'The sum of all difficulty percentages must be 100.';
-            return false;
+          e.preventDefault();
+          document.getElementById("error-message-3").innerText =
+            "The sum of all difficulty percentages must be 100.";
+          return false;
         }
 
-        document.getElementById('error-message-1').innerText = '';
-        document.getElementById('error-message-2').innerText = '';
-        document.getElementById('error-message-3').innerText = '';
+        document.getElementById("error-message-1").innerText = "";
+        document.getElementById("error-message-2").innerText = "";
+        document.getElementById("error-message-3").innerText = "";
         return true;
-    };
-</script>
-</body>
+      };
+    </script>
+  </body>
 </html>
