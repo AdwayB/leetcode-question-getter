@@ -1,13 +1,16 @@
 import random
 import pandas as pd
+import json
 from helpers.fetch_data import fetch_data
 
 
 def export_data(filtered_data):
     json_output_file_name = 'lc-questions.json'
     excel_output_file_name = 'lc-questions.xlsx'
+    
+    filtered_data["Title"] = filtered_data["Title"].apply(lambda x: x.split('>')[1].split('<')[0])
 
-    filtered_data.to_json(json_output_file_name, orient='records', lines=True)
+    json.dumps(filtered_data, indent=4, sort_keys=True, default=str)
     filtered_data.to_excel(excel_output_file_name, index=False)
 
     return json_output_file_name, excel_output_file_name
