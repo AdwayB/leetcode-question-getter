@@ -7,11 +7,12 @@ from helpers.fetch_data import fetch_data
 def export_data(filtered_data):
     json_output_file_name = 'lc-questions.json'
     excel_output_file_name = 'lc-questions.xlsx'
-    
-    filtered_data["Title"] = filtered_data["Title"].apply(lambda x: x.split('>')[1].split('<')[0])
 
-    json.dumps(filtered_data, indent=4, sort_keys=True, default=str)
-    filtered_data.to_excel(excel_output_file_name, index=False)
+    dataframe_copy = filtered_data.copy(deep=True)
+    dataframe_copy["Title"] = dataframe_copy["Title"].apply(lambda x: x.split('>')[1].split('<')[0])
+
+    json.dumps(dataframe_copy, indent=4, sort_keys=True, default=str)
+    dataframe_copy.to_excel(excel_output_file_name, index=False)
 
     return json_output_file_name, excel_output_file_name
 
